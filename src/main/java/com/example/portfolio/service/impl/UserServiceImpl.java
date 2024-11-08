@@ -47,4 +47,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username)
             .orElseThrow(()-> new RuntimeException("User not found!"));
     }
+
+    @Override
+    public void assignRoleToUser(String username, String roleName) {
+        User user = userRepository.findByUsername(username) 
+                .orElseThrow(() -> new RuntimeException("User not found.")); 
+        Role role = roleRepository.findByName(RoleName.valueOf(roleName)) 
+                .orElseThrow(() -> new RuntimeException("Role not found.")); 
+            
+        user.getRoles().add(role); 
+        userRepository.save(user);
+    }
 }

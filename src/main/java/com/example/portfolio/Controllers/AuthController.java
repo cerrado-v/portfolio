@@ -39,6 +39,7 @@ public class AuthController {
     public String registerUser(UserDto userDto, Model model) {
         try {
             userService.registerNewUser(userDto);
+            userService.assignRoleToUser(userDto.getUsername(), userDto.getRole());
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "An error occurred while registering. Please try again.");
