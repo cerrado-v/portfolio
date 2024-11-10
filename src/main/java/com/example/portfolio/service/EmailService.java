@@ -1,5 +1,5 @@
-package com.example.portfolio.service;
+// package com.example.portfolio.service;
 
-public interface EmailService {
-    void sendEmail(String to, String subject, String text);
-}
+// public interface EmailService {
+//     void sendEmail(String to, String subject, String text);
+// }

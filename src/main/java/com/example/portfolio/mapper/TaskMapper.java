@@ -5,28 +5,32 @@ import com.example.portfolio.model.Task;
 import com.example.portfolio.model.UserTask;
 
 public class TaskMapper {
-
     public static Task mapToTask(TaskDto taskDto, UserTask userTask) {
-        return Task.builder()
-                .id(taskDto.getId())
-                .title(taskDto.getTitle())
-                .startDate(taskDto.getStartDate())
-                .endDate(taskDto.getEndDate())
-                .status(taskDto.getStatus())
-                .user(userTask)
-                .completedDate(taskDto.getCompletedDate())
-                .build();
+        Task task = new Task();
+        task.setId(taskDto.getId());
+        task.setTitle(taskDto.getTitle());
+        task.setStartDate(taskDto.getStartDate());
+        task.setEndDate(taskDto.getEndDate());
+        task.setCompletedDate(taskDto.getCompletedDate());
+        task.setStatus(taskDto.getStatus());
+        task.setUser(userTask); 
+        task.setIdTask(taskDto.getIdTask());
+
+        return task;
     }
 
     public static TaskDto mapToTaskDto(Task task) {
-        return TaskDto.builder()
-                .id(task.getId())
-                .title(task.getTitle())
-                .startDate(task.getStartDate())
-                .endDate(task.getEndDate())
-                .status(task.getStatus())
-                .userEmail(task.getUser().getEmail())
-                .completedDate(task.getCompletedDate())
-                .build();
+        TaskDto taskDto = new TaskDto();
+        taskDto.setId(task.getId());
+        taskDto.setTitle(task.getTitle());
+        taskDto.setStartDate(task.getStartDate());
+        taskDto.setEndDate(task.getEndDate());
+        taskDto.setCompletedDate(task.getCompletedDate());
+        taskDto.setStatus(task.getStatus());
+        taskDto.setUserEmail(task.getUser().getEmail());
+        taskDto.setIdTask(task.getIdTask());  
+
+        return taskDto;
     }
 }
+
