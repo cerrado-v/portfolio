@@ -9,8 +9,8 @@ public interface TaskService {
 
     List<TaskDto> getAllTasksByUserEmail(String userEmail);
     TaskDto addTask(TaskDto taskDto);
-    TaskDto updateTask(String idTask, TaskDto taskDto);
-    void deleteTask(String idTask);
+    TaskDto updateTask(Long id, TaskDto taskDto);
+    void deleteTask(Long id);
     TaskDto getTaskById(String idTask);
     UserTask registerUser(String email);
 }

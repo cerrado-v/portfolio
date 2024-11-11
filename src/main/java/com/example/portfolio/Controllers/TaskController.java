@@ -56,27 +56,28 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<TaskDto> addTask(@RequestBody TaskDto taskDto) {
-        String generatedIdTask = UUID.randomUUID().toString();
-        taskDto.setIdTask(generatedIdTask);
+        // String generatedIdTask = UUID.randomUUID().toString();
+        // taskDto.setIdTask(generatedIdTask);
 
         TaskDto createdTask = taskService.addTask(taskDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask); 
     }
 
-    @PutMapping("{idTask}")
-    public ResponseEntity<TaskDto> updateTask(@PathVariable String idTask, @RequestBody TaskDto taskDto) {
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskDto> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         try {
-            TaskDto updatedTask = taskService.updateTask(idTask, taskDto);
+            TaskDto updatedTask = taskService.updateTask(id, taskDto);
             return ResponseEntity.ok(updatedTask); 
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
         }
     }
 
-    @DeleteMapping("{idTask}")
-    public ResponseEntity<Void> deleteTask(@PathVariable String idTask) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         try {
-            taskService.deleteTask(idTask);
+            taskService.deleteTask(id);
             return ResponseEntity.noContent().build();  
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

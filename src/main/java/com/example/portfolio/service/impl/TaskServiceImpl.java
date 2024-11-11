@@ -37,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
         task.setEmail(taskDto.getUserEmail());
         task.setCompletedDate(taskDto.getCompletedDate());
         task.setId(taskDto.getId());
+        task.setStatus(taskDto.getStatus());
         Task savedTask = taskRepository.save(task);
 
         return TaskMapper.mapToTaskDto(savedTask);
@@ -54,8 +55,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto updateTask(String idTask, TaskDto taskDto) {
-        Task task = taskRepository.findByIdTask(idTask)
+    public TaskDto updateTask(Long id, TaskDto taskDto) {
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found."));
 
         task.setTitle(taskDto.getTitle());
@@ -70,8 +71,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(String idTask) {
-        Task task = taskRepository.findByIdTask(idTask)
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id Task not found."));
 
         taskRepository.delete(task);
