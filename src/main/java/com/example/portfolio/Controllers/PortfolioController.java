@@ -22,7 +22,7 @@ public class PortfolioController {
         return "navs/index";
     }
 
-    @GetMapping("/ToDoList")
+    @GetMapping("/ToDoList/login")
     public String todoPage() {
         return "todo/Index";
     }
