@@ -27,18 +27,35 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto addTask(TaskDto taskDto) {
         UserTask userTask = userTaskRepository.findByEmail(taskDto.getUserEmail());
         if (userTask == null) {
-            throw new RuntimeException("User not found with email: " + taskDto.getUserEmail());
+            userTask = new UserTask();
+            userTask.setEmail(taskDto.getUserEmail());
+            userTaskRepository.save(userTask); 
         }
 
+
         Task task = TaskMapper.mapToTask(taskDto, userTask);
+        task.setEmail(taskDto.getUserEmail());
+        task.setCompletedDate(taskDto.getCompletedDate());
+        task.setId(taskDto.getId());
         Task savedTask = taskRepository.save(task);
 
         return TaskMapper.mapToTaskDto(savedTask);
     }
 
     @Override
-    public TaskDto updateTask(Long id, TaskDto taskDto) {
-        Task task = taskRepository.findById(id)
+    public UserTask registerUser(String email) {
+        UserTask existingUser = userTaskRepository.findByEmail(email);
+        if (existingUser != null) {
+            throw new RuntimeException("User already exists with email: " + email);
+        }
+        UserTask newUser = new UserTask();
+        newUser.setEmail(email);
+        return userTaskRepository.save(newUser);
+    }
+
+    @Override
+    public TaskDto updateTask(String idTask, TaskDto taskDto) {
+        Task task = taskRepository.findByIdTask(idTask)
                 .orElseThrow(() -> new RuntimeException("Task not found."));
 
         task.setTitle(taskDto.getTitle());
@@ -53,14 +70,31 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
+    public void deleteTask(String idTask) {
+        Task task = taskRepository.findByIdTask(idTask)
+                .orElseThrow(() -> new RuntimeException("Id Task not found."));
+
+        taskRepository.delete(task);
     }
 
     @Override
-    public List<TaskDto> getAllTasks() {
-        return taskRepository.findAll().stream()
+    public List<TaskDto> getAllTasksByUserEmail(String userEmail) {
+        UserTask userTask = userTaskRepository.findByEmail(userEmail);
+        if (userTask == null) {
+            throw new RuntimeException("User not found.");
+        }
+
+        return taskRepository.findByUser(userTask).stream()
                 .map(TaskMapper::mapToTaskDto)
                 .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public TaskDto getTaskById(String idTask) {
+        Task task = taskRepository.findByIdTask(idTask)
+            .orElseThrow(() -> new RuntimeException("Task not found!"));
+
+        return TaskMapper.mapToTaskDto(task);
     }
 }

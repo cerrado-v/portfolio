@@ -25,12 +25,14 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String status;
     private LocalDateTime completedDate;
     private String email;
+    private String idTask;
 
     @ManyToOne
     @JoinColumn(name = "user_id") 

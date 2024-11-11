@@ -20,5 +20,6 @@ public class TaskDto {
     private String status;
     private String userEmail;
     private LocalDateTime completedDate;
+    private String idTask;
 
 }
