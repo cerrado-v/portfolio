@@ -1,5 +1,6 @@
 package com.example.portfolio.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,25 @@ public class TaskServiceImpl implements TaskService {
         return userTaskRepository.save(newUser);
     }
 
+    // @Override
+    // public List<TaskDto> updateAllUser(List<TaskDto> taskDtos) {
+    //     List<Task> updatedTasks = new ArrayList<>();
+    //     for (TaskDto taskDto : taskDtos) {
+    //     Task task = taskRepository.findById(taskDto.getId())
+    //             .orElseThrow(() -> new RuntimeException("Task not found for id: " + taskDto.getId()));
+
+    //     task.setStatus(taskDto.getStatus());
+    //     task.setCompletedDate(taskDto.getCompletedDate());
+    //     // Update other fields as necessary
+
+    //     updatedTasks.add(taskRepository.save(task));
+    // }
+    // return updatedTasks.stream()
+    //         .map(TaskMapper::mapToTaskDto)
+    //         .collect(Collectors.toList());
+    // }
+
+
     @Override
     public TaskDto updateTask(Long id, TaskDto taskDto) {
         Task task = taskRepository.findById(id)
@@ -98,4 +118,5 @@ public class TaskServiceImpl implements TaskService {
 
         return TaskMapper.mapToTaskDto(task);
     }
+    
 }

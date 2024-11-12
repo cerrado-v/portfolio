@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin("*")
 @Controller
 public class PortfolioController {
-
  
     @GetMapping("/employee")
     public String forward() { 
@@ -22,12 +21,15 @@ public class PortfolioController {
         return "navs/index";
     }
 
-    @GetMapping("/ToDoList/login")
+    @GetMapping("/ToDoList")
     public String todoPage() {
         return "todo/Index";
     }
 
-
+    @GetMapping("/tasks")
+    public String todoPage2() {
+        return "todo/Index";
+    }
 
     @GetMapping("/projects/blogs")
     public String blogsPage() {

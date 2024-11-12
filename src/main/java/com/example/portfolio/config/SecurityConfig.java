@@ -29,7 +29,7 @@ public class SecurityConfig {
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(requests ->
                 requests
-                    .requestMatchers("/**").permitAll() 
+                    .requestMatchers("/**").permitAll()
                     .requestMatchers("/ToDoList/**").permitAll()
                     .requestMatchers("/employee/**").hasAnyRole("ADMIN", "USER")
                     .requestMatchers("/register", "/login").permitAll()

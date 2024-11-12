@@ -38,7 +38,7 @@ public class Task {
 
     private String status;
 
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy, hh:mm:ss a")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy, hh:mm:ss a")
     private LocalDateTime completedDate;
     private String email;
     private String idTask;

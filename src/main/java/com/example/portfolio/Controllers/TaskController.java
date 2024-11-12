@@ -30,7 +30,7 @@ public class TaskController {
     TaskService taskService;
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<TaskDto>> getTasksByUserEmail(@RequestParam("email") String email) {
+    public ResponseEntity<List<TaskDto>> getTasksByUserEmail(@RequestParam(name="email") String email) {
         List<TaskDto> tasks = taskService.getAllTasksByUserEmail(email);
         return ResponseEntity.ok(tasks);
     }
@@ -44,7 +44,7 @@ public class TaskController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestParam("email") String email) {
+    public ResponseEntity<String> registerUser(@RequestParam(name="email") String email) {
         try {
             taskService.registerUser(email);
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully.");
@@ -63,6 +63,15 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask); 
     }
 
+    // @PutMapping("/tasks/bulk-update")
+    // public ResponseEntity<List<TaskDto>> updateMultipleTasks(@RequestBody List<TaskDto> tasks) {
+    //     try {
+    //         List<TaskDto> updatedTasks = taskService.updateAllUser(tasks);
+    //         return ResponseEntity.ok(updatedTasks);
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {

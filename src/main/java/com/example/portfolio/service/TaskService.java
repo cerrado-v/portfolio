@@ -13,4 +13,5 @@ public interface TaskService {
     void deleteTask(Long id);
     TaskDto getTaskById(String idTask);
     UserTask registerUser(String email);
+    // List<TaskDto> updateAllUser(List<TaskDto> taskDtos);
 }
