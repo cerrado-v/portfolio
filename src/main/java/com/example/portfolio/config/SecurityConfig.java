@@ -31,6 +31,7 @@ public class SecurityConfig {
                 requests
                     .requestMatchers("/**").permitAll()
                     .requestMatchers("/ToDoList/**").permitAll()
+                    .requestMatchers("/shop/**").permitAll()
                     .requestMatchers("/employee/**").hasAnyRole("ADMIN", "USER")
                     .requestMatchers("/register", "/login").permitAll()
                     // .requestMatchers("/admin/**").hasRole("ADMIN")

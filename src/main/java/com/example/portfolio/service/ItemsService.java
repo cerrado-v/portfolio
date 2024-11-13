@@ -8,11 +8,13 @@ public interface ItemsService {
 
     ItemsDto addProduct(ItemsDto itemsDto);
 
+    List<ItemsDto> addManyProducts(List<ItemsDto> itemsDto);
+
     List<ItemsDto> getAllProducts();
 
     List<ItemsDto> getProductsBySection(String section);
 
     List<ItemsDto> getProductsByCategoryAndSection(String category, String section);
 
-
+    List<ItemsDto> getProductsByCategory(String category);
 }

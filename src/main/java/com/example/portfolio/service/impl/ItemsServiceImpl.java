@@ -30,6 +30,19 @@ public class ItemsServiceImpl implements ItemsService{
     }
 
     @Override
+    public List<ItemsDto> addManyProducts(List<ItemsDto> itemsDtoList) {
+        List<Items> products = itemsDtoList.stream()
+                                        .map(ItemsMapper::mapToItems)
+                                        .collect(Collectors.toList());
+
+        List<Items> savedProducts = itemsRepository.saveAll(products);
+
+        return savedProducts.stream()
+                            .map(ItemsMapper::mapToItemsDto)
+                            .collect(Collectors.toList());
+    }
+
+    @Override
     public List<ItemsDto> getAllProducts() {
         List<Items> products = itemsRepository.findAll();
 
@@ -52,6 +65,15 @@ public class ItemsServiceImpl implements ItemsService{
         List<Items> productsCategorySection = itemsRepository.findByCategoryAndSection(category, section);
         
         return productsCategorySection.stream().map(
+            (product) -> ItemsMapper.mapToItemsDto(product))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemsDto> getProductsByCategory(String category) {
+        List<Items> productsCategory = itemsRepository.findByCategory(category);
+
+        return productsCategory.stream().map(
             (product) -> ItemsMapper.mapToItemsDto(product))
                 .collect(Collectors.toList());
     }

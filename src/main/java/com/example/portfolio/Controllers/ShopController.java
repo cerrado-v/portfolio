@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.portfolio.dto.ItemsDto;
+import com.example.portfolio.model.Items;
 import com.example.portfolio.service.ItemsService;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +37,12 @@ public class ShopController {
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
+    @PostMapping("/addmanyproducts")
+    public ResponseEntity<List<ItemsDto>> addMultipleProducts(@RequestBody List<ItemsDto> itemsDtos){
+        List<ItemsDto> addAllProducts = itemsService.addManyProducts(itemsDtos);
+        return new ResponseEntity<>(addAllProducts, HttpStatus.CREATED);
+    }
+
     @GetMapping
     public ResponseEntity<List<ItemsDto>> getAllProducts(){
         List<ItemsDto> products = itemsService.getAllProducts();
@@ -42,23 +50,27 @@ public class ShopController {
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/section")
-    public ResponseEntity<List<ItemsDto>> getWomensProducts(@RequestParam(name="section") String section){
-
+    @GetMapping("/section/{section}")
+    public ResponseEntity<List<ItemsDto>> getWomensProducts(@PathVariable(name="section") String section){
         List<ItemsDto> productDto = itemsService.getProductsBySection(section);
         
             return ResponseEntity.ok(productDto);
     }
 
-    @GetMapping("/category")
+    @GetMapping("/categorysection/{section}/{category}")
     public ResponseEntity<List<ItemsDto>> getProductsByCategoryAndSection(
-            @RequestParam(name="category") String category,
-            @RequestParam(name="section") String section) {
+            @PathVariable(name="category") String category,
+            @PathVariable(name="section") String section) {
 
         List<ItemsDto> productsDto = itemsService.getProductsByCategoryAndSection(category, section);
         return ResponseEntity.ok(productsDto);
     }
 
-
-    
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<ItemsDto>> getProductsByCategory(
+            @PathVariable(name="category") String category){
+        
+        List<ItemsDto> productsDto = itemsService.getProductsByCategory(category);
+        return ResponseEntity.ok(productsDto);
+    }
 }

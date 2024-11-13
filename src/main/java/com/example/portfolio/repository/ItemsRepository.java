@@ -11,4 +11,6 @@ public interface ItemsRepository extends JpaRepository<Items, Long>{
         List<Items> findBySection(String section);
         
         List<Items> findByCategoryAndSection(String category, String section);
+
+        List<Items> findByCategory(String category);
 }
